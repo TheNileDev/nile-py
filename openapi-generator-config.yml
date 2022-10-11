@@ -1,0 +1,2 @@
+project_name_override: "nile-py"
+package_name_override: nile_api
