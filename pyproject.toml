@@ -39,6 +39,9 @@ classifiers = [
 dynamic = ["version"]
 
 dependencies = [
+  "attrs",
+  "httpx",
+  "python-dateutil",
 ]
 
 [project.urls]
