@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[project]
+name = "nile-api"
+description = "A client library for accessing the Nile API"
+requires-python = ">=3.7"
+readme = "README.rst"
+license = {text = "MIT"}
+keywords = [
+    "client",
+    "control plane",
+    "infrastructure",
+    "openapi",
+    "saas",
+]
+authors = [
+  {email = "support@thenile.dev"},
+  {name = "The Nile"},
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dynamic = ["version"]
+
+dependencies = [
+]
+
+[project.urls]
+Homepage = "https://www.thenile.dev/"
+Issues = "https://github.com/TheNileDev/nile-py/issues/"
+Source = "https://github.com/TheNileDev/nile-py"
+
+[tool.black]
+line-length = 79
+
+[tool.isort]
+from_first = true
+include_trailing_comma = true
+line_length = 79
+profile = "black"
