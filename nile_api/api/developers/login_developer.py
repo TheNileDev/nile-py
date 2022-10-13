@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
+from ...models.login_info import LoginInfo
 from ...models.error import Error
 from ...models.token import Token
 from ...types import Response
@@ -10,6 +11,7 @@ from ...types import Response
 
 def _get_kwargs(
     *,
+    info: LoginInfo,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/auth/login".format(client.base_url)
@@ -23,6 +25,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": info.to_dict(),
     }
 
 
@@ -50,6 +53,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Error, Token]
 def sync_detailed(
     *,
     client: Client,
+    info: LoginInfo,
 ) -> Response[Union[Error, Token]]:
     """Log in a developer to nile
 
@@ -59,6 +63,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        info=info,
     )
 
     response = httpx.request(
@@ -72,6 +77,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
+    info: LoginInfo,
 ) -> Optional[Union[Error, Token]]:
     """Log in a developer to nile
 
@@ -81,6 +87,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        info=info,
     ).parsed
 
 
