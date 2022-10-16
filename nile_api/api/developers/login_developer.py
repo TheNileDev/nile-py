@@ -94,6 +94,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
+    info: LoginInfo,
 ) -> Response[Union[Error, Token]]:
     """Log in a developer to nile
 
@@ -103,6 +104,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        info=info,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -114,6 +116,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
+    info: LoginInfo,
 ) -> Optional[Union[Error, Token]]:
     """Log in a developer to nile
 
@@ -124,5 +127,6 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            info=info,
         )
     ).parsed
