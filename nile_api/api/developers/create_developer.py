@@ -3,12 +3,14 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
+from ...models.create_user_request import CreateUserRequest
 from ...models.user import User
 from ...types import Response
 
 
 def _get_kwargs(
     *,
+    json_body: CreateUserRequest,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/developers".format(client.base_url)
@@ -22,6 +24,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_body.to_dict(),
     }
 
 
@@ -44,6 +47,7 @@ def _build_response(*, response: httpx.Response) -> Response[User]:
 
 def sync_detailed(
     *,
+    json_body: CreateUserRequest,
     client: Client,
 ) -> Response[User]:
     """Create a developer
@@ -54,6 +58,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -66,6 +71,7 @@ def sync_detailed(
 
 def sync(
     *,
+    json_body: CreateUserRequest,
     client: Client,
 ) -> Optional[User]:
     """Create a developer
@@ -76,11 +82,13 @@ def sync(
 
     return sync_detailed(
         client=client,
+        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
+    json_body: CreateUserRequest,
     client: Client,
 ) -> Response[User]:
     """Create a developer
@@ -91,6 +99,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -101,6 +110,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
+    json_body: CreateUserRequest,
     client: Client,
 ) -> Optional[User]:
     """Create a developer
@@ -112,5 +122,6 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            json_body=json_body,
         )
     ).parsed

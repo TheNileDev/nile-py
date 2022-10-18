@@ -4,12 +4,14 @@ import httpx
 
 from ...client import Client
 from ...models.entity import Entity
+from ...models.create_entity_request import CreateEntityRequest
 from ...types import Response
 
 
 def _get_kwargs(
     workspace: str,
     *,
+    json_body: CreateEntityRequest,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/workspaces/{workspace}/entities".format(
@@ -25,6 +27,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_body.to_dict(),
     }
 
 
@@ -48,6 +51,7 @@ def _build_response(*, response: httpx.Response) -> Response[Entity]:
 def sync_detailed(
     workspace: str,
     *,
+    json_body: CreateEntityRequest,
     client: Client,
 ) -> Response[Entity]:
     """Create Entity
@@ -62,6 +66,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         workspace=workspace,
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -75,6 +80,7 @@ def sync_detailed(
 def sync(
     workspace: str,
     *,
+    json_body: CreateEntityRequest,
     client: Client,
 ) -> Optional[Entity]:
     """Create Entity
@@ -89,12 +95,14 @@ def sync(
     return sync_detailed(
         workspace=workspace,
         client=client,
+        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     workspace: str,
     *,
+    json_body: CreateEntityRequest,
     client: Client,
 ) -> Response[Entity]:
     """Create Entity
@@ -109,6 +117,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         workspace=workspace,
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -120,6 +129,7 @@ async def asyncio_detailed(
 async def asyncio(
     workspace: str,
     *,
+    json_body: CreateEntityRequest,
     client: Client,
 ) -> Optional[Entity]:
     """Create Entity
@@ -135,5 +145,6 @@ async def asyncio(
         await asyncio_detailed(
             workspace=workspace,
             client=client,
+            json_body=json_body,
         )
     ).parsed
