@@ -13,6 +13,11 @@ The Nile Python SDK is available on `PyPI <https://pypi.org/project/nile-api/>`_
 
 (in a virtual environment as appropriate).
 
+Usage
+-----
+
+Usage examples of the SDK can be found in the Nile `examples repository <https://github.com/TheNileDev/examples/>`_, within the directories with ``-python`` in their name.
+
 Development
 -----------
 
