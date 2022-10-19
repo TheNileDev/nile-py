@@ -2,6 +2,17 @@
 Nile API Python Client
 ======================
 
+Installing
+----------
+
+The Nile Python SDK is available on `PyPI <https://pypi.org/project/nile-api/>`_, and can be installed via:
+
+.. code-block:: sh
+
+    pip install nile-api
+
+(in a virtual environment as appropriate).
+
 Development
 -----------
 
