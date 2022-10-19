@@ -16,7 +16,7 @@ async def on(
     workspace: str,
     type: str,
     seq: int,
-    refresh=5000,
+    refresh: int = 5,
 ):
     while True:
         events = await instance_events.asyncio(
