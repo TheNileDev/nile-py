@@ -27,6 +27,5 @@ async def on(
         )
         for event in events:
             yield event
-            print(event.after)
             seq = event.after.seq
         await asyncio.sleep(refresh)
