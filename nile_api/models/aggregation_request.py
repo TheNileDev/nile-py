@@ -1,10 +1,12 @@
-import datetime
 from typing import Any, Dict, List, Type, TypeVar, Union
+import datetime
 
-import attr
 from dateutil.parser import isoparse
+import attr
 
-from ..models.aggregation_request_bucket_size import AggregationRequestBucketSize
+from ..models.aggregation_request_bucket_size import (
+    AggregationRequestBucketSize,
+)
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="AggregationRequest")
@@ -14,21 +16,24 @@ T = TypeVar("T", bound="AggregationRequest")
 class AggregationRequest:
     """
     Attributes:
-        timestamp (datetime.datetime): An ISO-8601 formatted date-time https://www.iso.org/iso-8601-date-and-time-
-            format.html that represents the time the datapoint was created
+        start_time (datetime.datetime): An ISO-8601 formatted date-time, i.e., 2018-11-13T20:20:39+00:00, that the
+            aggregation should start at. This time will be truncated based on bucket_size, i.e., if bucket_size is 1h, then
+            the start_time will be truncated to the nearest hour.
         bucket_size (Union[Unset, AggregationRequestBucketSize]): The size of the bucket
         buckets (Union[Unset, int]): Number of buckets to return. Defaults to 3 if not provided. Default: 3.
         organization_id (Union[Unset, str]): The Nile organization id to aggregate on
+        instance_id (Union[Unset, str]): The optional Nile instance id to aggregate on
     """
 
-    timestamp: datetime.datetime
+    start_time: datetime.datetime
     bucket_size: Union[Unset, AggregationRequestBucketSize] = UNSET
     buckets: Union[Unset, int] = 3
     organization_id: Union[Unset, str] = UNSET
+    instance_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        timestamp = self.timestamp.isoformat()
+        start_time = self.start_time.isoformat()
 
         bucket_size: Union[Unset, str] = UNSET
         if not isinstance(self.bucket_size, Unset):
@@ -36,12 +41,13 @@ class AggregationRequest:
 
         buckets = self.buckets
         organization_id = self.organization_id
+        instance_id = self.instance_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "timestamp": timestamp,
+                "start_time": start_time,
             }
         )
         if bucket_size is not UNSET:
@@ -50,13 +56,15 @@ class AggregationRequest:
             field_dict["buckets"] = buckets
         if organization_id is not UNSET:
             field_dict["organization_id"] = organization_id
+        if instance_id is not UNSET:
+            field_dict["instance_id"] = instance_id
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        timestamp = isoparse(d.pop("timestamp"))
+        start_time = isoparse(d.pop("start_time"))
 
         _bucket_size = d.pop("bucket_size", UNSET)
         bucket_size: Union[Unset, AggregationRequestBucketSize]
@@ -69,11 +77,14 @@ class AggregationRequest:
 
         organization_id = d.pop("organization_id", UNSET)
 
+        instance_id = d.pop("instance_id", UNSET)
+
         aggregation_request = cls(
-            timestamp=timestamp,
+            start_time=start_time,
             bucket_size=bucket_size,
             buckets=buckets,
             organization_id=organization_id,
+            instance_id=instance_id,
         )
 
         aggregation_request.additional_properties = d

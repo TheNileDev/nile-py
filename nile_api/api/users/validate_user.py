@@ -33,7 +33,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, Error]]:
     if response.status_code == 204:
         response_204 = cast(Any, None)
         return response_204
@@ -44,7 +46,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Error]]:
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -59,7 +63,7 @@ def sync_detailed(
     client: Client,
     json_body: Token,
 ) -> Response[Union[Any, Error]]:
-    """Validate a user Token
+    """Validate a user token
 
      Validates a user token. Use this when using Nile authentication to validate access to non-Nile
     resources. See the [Add Authentication Guide](https://nile-docs.vercel.app/docs/current/guides/how-
@@ -93,7 +97,7 @@ def sync(
     client: Client,
     json_body: Token,
 ) -> Optional[Union[Any, Error]]:
-    """Validate a user Token
+    """Validate a user token
 
      Validates a user token. Use this when using Nile authentication to validate access to non-Nile
     resources. See the [Add Authentication Guide](https://nile-docs.vercel.app/docs/current/guides/how-
@@ -120,7 +124,7 @@ async def asyncio_detailed(
     client: Client,
     json_body: Token,
 ) -> Response[Union[Any, Error]]:
-    """Validate a user Token
+    """Validate a user token
 
      Validates a user token. Use this when using Nile authentication to validate access to non-Nile
     resources. See the [Add Authentication Guide](https://nile-docs.vercel.app/docs/current/guides/how-
@@ -152,7 +156,7 @@ async def asyncio(
     client: Client,
     json_body: Token,
 ) -> Optional[Union[Any, Error]]:
-    """Validate a user Token
+    """Validate a user token
 
      Validates a user token. Use this when using Nile authentication to validate access to non-Nile
     resources. See the [Add Authentication Guide](https://nile-docs.vercel.app/docs/current/guides/how-

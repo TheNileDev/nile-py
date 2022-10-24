@@ -3,7 +3,6 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.create_organization_request import CreateOrganizationRequest
 from ...models.organization import Organization
 from ...types import Response
 
@@ -11,10 +10,11 @@ from ...types import Response
 def _get_kwargs(
     workspace: str,
     *,
-    json_body: CreateOrganizationRequest,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/workspaces/{workspace}/orgs".format(client.base_url, workspace=workspace)
+    url = "{}/workspaces/{workspace}/orgs".format(
+        client.base_url, workspace=workspace
+    )
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -25,7 +25,6 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "json": json_body.to_dict(),
     }
 
 
@@ -49,7 +48,6 @@ def _build_response(*, response: httpx.Response) -> Response[Organization]:
 def sync_detailed(
     workspace: str,
     *,
-    json_body: CreateOrganizationRequest,
     client: Client,
 ) -> Response[Organization]:
     """Create a new organization
@@ -64,7 +62,6 @@ def sync_detailed(
     kwargs = _get_kwargs(
         workspace=workspace,
         client=client,
-        json_body=json_body,
     )
 
     response = httpx.request(
@@ -78,7 +75,6 @@ def sync_detailed(
 def sync(
     workspace: str,
     *,
-    json_body: CreateOrganizationRequest,
     client: Client,
 ) -> Optional[Organization]:
     """Create a new organization
@@ -93,14 +89,12 @@ def sync(
     return sync_detailed(
         workspace=workspace,
         client=client,
-        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     workspace: str,
     *,
-    json_body: CreateOrganizationRequest,
     client: Client,
 ) -> Response[Organization]:
     """Create a new organization
@@ -115,7 +109,6 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         workspace=workspace,
         client=client,
-        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -127,7 +120,6 @@ async def asyncio_detailed(
 async def asyncio(
     workspace: str,
     *,
-    json_body: CreateOrganizationRequest,
     client: Client,
 ) -> Optional[Organization]:
     """Create a new organization
@@ -143,6 +135,5 @@ async def asyncio(
         await asyncio_detailed(
             workspace=workspace,
             client=client,
-            json_body=json_body,
         )
     ).parsed

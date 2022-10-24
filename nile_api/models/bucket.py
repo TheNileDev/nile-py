@@ -1,8 +1,8 @@
-import datetime
 from typing import Any, Dict, List, Type, TypeVar, Union
+import datetime
 
-import attr
 from dateutil.parser import isoparse
+import attr
 
 from ..models.bucket_bucket_size import BucketBucketSize
 from ..types import UNSET, Unset
@@ -15,13 +15,16 @@ class Bucket:
     """The buckets of the aggregation
 
     Attributes:
-        timestamp (Union[Unset, datetime.datetime]): The timestamp when the bucket starts
-        bucket_size (Union[Unset, BucketBucketSize]): The size of the bucket
+        timestamp (Union[Unset, datetime.datetime]): The timestamp when the bucket starts Example: 2021-01-01
+            00:00:00+00:00.
+        bucket_size (Union[Unset, BucketBucketSize]): The size of the bucket Example: 1h.
         average (Union[Unset, float]): The average of all values in the bucket
         sum_ (Union[Unset, float]): The sum of all values in the bucket
         min_ (Union[Unset, float]): The min of all values in the bucket
         max_ (Union[Unset, float]): The max of all values in the bucket
         percentile_95 (Union[Unset, float]): The 95th percentile
+        organization_id (Union[Unset, str]): The organization id Example: org_02qwn8bovgrXdNx8XlVzbU.
+        instance_id (Union[Unset, str]): The organization id Example: inst_02qwn8bovgrXdNx8XlVzbU.
     """
 
     timestamp: Union[Unset, datetime.datetime] = UNSET
@@ -31,6 +34,8 @@ class Bucket:
     min_: Union[Unset, float] = UNSET
     max_: Union[Unset, float] = UNSET
     percentile_95: Union[Unset, float] = UNSET
+    organization_id: Union[Unset, str] = UNSET
+    instance_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -47,6 +52,8 @@ class Bucket:
         min_ = self.min_
         max_ = self.max_
         percentile_95 = self.percentile_95
+        organization_id = self.organization_id
+        instance_id = self.instance_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -65,6 +72,10 @@ class Bucket:
             field_dict["max"] = max_
         if percentile_95 is not UNSET:
             field_dict["percentile_95"] = percentile_95
+        if organization_id is not UNSET:
+            field_dict["organization_id"] = organization_id
+        if instance_id is not UNSET:
+            field_dict["instance_id"] = instance_id
 
         return field_dict
 
@@ -95,6 +106,10 @@ class Bucket:
 
         percentile_95 = d.pop("percentile_95", UNSET)
 
+        organization_id = d.pop("organization_id", UNSET)
+
+        instance_id = d.pop("instance_id", UNSET)
+
         bucket = cls(
             timestamp=timestamp,
             bucket_size=bucket_size,
@@ -103,6 +118,8 @@ class Bucket:
             min_=min_,
             max_=max_,
             percentile_95=percentile_95,
+            organization_id=organization_id,
+            instance_id=instance_id,
         )
 
         bucket.additional_properties = d

@@ -12,7 +12,9 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/workspaces/{workspace}/orgs".format(client.base_url, workspace=workspace)
+    url = "{}/workspaces/{workspace}/orgs".format(
+        client.base_url, workspace=workspace
+    )
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -26,7 +28,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[List[Organization]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[List[Organization]]:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -39,7 +43,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[List[Organization]]
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[List[Organization]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[List[Organization]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -53,7 +59,7 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[List[Organization]]:
-    """List all Organizations
+    """List all organizations
 
     Args:
         workspace (str):
@@ -80,7 +86,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[List[Organization]]:
-    """List all Organizations
+    """List all organizations
 
     Args:
         workspace (str):
@@ -100,7 +106,7 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[List[Organization]]:
-    """List all Organizations
+    """List all organizations
 
     Args:
         workspace (str):
@@ -125,7 +131,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[List[Organization]]:
-    """List all Organizations
+    """List all organizations
 
     Args:
         workspace (str):

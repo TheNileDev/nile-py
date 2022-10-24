@@ -1,8 +1,8 @@
-import datetime
 from typing import Any, Dict, List, Type, TypeVar, Union
+import datetime
 
-import attr
 from dateutil.parser import isoparse
+import attr
 
 from ..models.entity_type import EntityType
 from ..models.json_schema import JsonSchema

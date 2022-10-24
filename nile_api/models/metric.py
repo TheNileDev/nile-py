@@ -12,9 +12,9 @@ T = TypeVar("T", bound="Metric")
 class Metric:
     """
     Attributes:
-        name (str): The name of the metric that is unique in a workspace
-        type (MetricType): Type of metric. Currently sum or gauge
-        entity_type (str): The Nile entity type this metric is related to
+        name (str): The name of the metric that is unique in a workspace Example: cluster.bytes.in.
+        type (MetricType): Type of metric. Currently sum or gauge Example: sum.
+        entity_type (str): The Nile entity type this metric is related to Example: cluster.
         measurements (List[Measurement]): Measurements associated with this metric
     """
 

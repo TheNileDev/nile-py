@@ -12,9 +12,9 @@ class MetricDefinition:
     """The list of metric definitions for a workspace or entity
 
     Attributes:
-        name (str): The name of the metric
-        type (MetricDefinitionType): The type of the metric
-        entity_type (str): The entity type of the metric
+        name (str): The name of the metric Example: cluster.bytes.out.
+        type (MetricDefinitionType): The type of the metric Example: gauge.
+        entity_type (str): The entity type of the metric Example: cluster.
     """
 
     name: str

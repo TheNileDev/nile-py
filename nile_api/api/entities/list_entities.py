@@ -55,7 +55,7 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[List[Entity]]:
-    """List all Entities
+    """List all entities
 
     Args:
         workspace (str):
@@ -82,7 +82,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[List[Entity]]:
-    """List all Entities
+    """List all entities
 
     Args:
         workspace (str):
@@ -102,7 +102,7 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[List[Entity]]:
-    """List all Entities
+    """List all entities
 
     Args:
         workspace (str):
@@ -127,7 +127,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[List[Entity]]:
-    """List all Entities
+    """List all entities
 
     Args:
         workspace (str):

@@ -60,7 +60,7 @@ def sync_detailed(
     client: Client,
     json_body: JsonSchemaInstance,
 ) -> Response[Instance]:
-    """Create a new Instance
+    """Create a new instance
 
     Args:
         workspace (str):
@@ -97,7 +97,7 @@ def sync(
     client: Client,
     json_body: JsonSchemaInstance,
 ) -> Optional[Instance]:
-    """Create a new Instance
+    """Create a new instance
 
     Args:
         workspace (str):
@@ -127,7 +127,7 @@ async def asyncio_detailed(
     client: Client,
     json_body: JsonSchemaInstance,
 ) -> Response[Instance]:
-    """Create a new Instance
+    """Create a new instance
 
     Args:
         workspace (str):
@@ -162,7 +162,7 @@ async def asyncio(
     client: Client,
     json_body: JsonSchemaInstance,
 ) -> Optional[Instance]:
-    """Create a new Instance
+    """Create a new instance
 
     Args:
         workspace (str):
