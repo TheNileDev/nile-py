@@ -1,8 +1,8 @@
-import datetime
 from typing import Any, Dict, List, Type, TypeVar, Union
+import datetime
 
-import attr
 from dateutil.parser import isoparse
+import attr
 
 from ..models.metadata import Metadata
 from ..models.user_org_memberships import UserOrgMemberships
@@ -16,36 +16,35 @@ T = TypeVar("T", bound="User")
 class User:
     """
     Attributes:
-        id (str):
         type (UserType):
         email (str):
+        id (Union[Unset, str]):
         created (Union[Unset, datetime.datetime]):
         updated (Union[Unset, datetime.datetime]):
         seq (Union[Unset, int]):
         metadata (Union[Unset, Metadata]): Arbitrary metadata. Example: {'location': 'US', 'age': 21, 'active': True,
             'name': {'first': 'John', 'last': 'Doe'}}.
         org_memberships (Union[Unset, UserOrgMemberships]):  Example: {'org_02qaCO8qNEmfpAcomojhLb': {'joined':
-            datetime.datetime(2022, 8, 9, 10, 27, 30, 956079), 'metadata': {'role': 'admin'}}, 'org_02qdS9KPAnG6Pt5XFAomu6':
-            {'joined': datetime.datetime(2022, 8, 3, 17, 30, 0, 295581), 'metadata': {'role': 'member'}}}.
-        developer (Union[Unset, bool]):
+            datetime.datetime(2022, 8, 9, 10, 27, 30, 956079), 'metadata': {'region': 'us-east-2'}},
+            'org_02qdS9KPAnG6Pt5XFAomu6': {'joined': datetime.datetime(2022, 8, 3, 17, 30, 0, 295581), 'metadata':
+            {'region': 'us-west-2'}}}.
     """
 
-    id: str
     type: UserType
     email: str
+    id: Union[Unset, str] = UNSET
     created: Union[Unset, datetime.datetime] = UNSET
     updated: Union[Unset, datetime.datetime] = UNSET
     seq: Union[Unset, int] = UNSET
     metadata: Union[Unset, Metadata] = UNSET
     org_memberships: Union[Unset, UserOrgMemberships] = UNSET
-    developer: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
         type = self.type.value
 
         email = self.email
+        id = self.id
         created: Union[Unset, str] = UNSET
         if not isinstance(self.created, Unset):
             created = self.created.isoformat()
@@ -63,17 +62,16 @@ class User:
         if not isinstance(self.org_memberships, Unset):
             org_memberships = self.org_memberships.to_dict()
 
-        developer = self.developer
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "id": id,
                 "type": type,
                 "email": email,
             }
         )
+        if id is not UNSET:
+            field_dict["id"] = id
         if created is not UNSET:
             field_dict["created"] = created
         if updated is not UNSET:
@@ -84,19 +82,17 @@ class User:
             field_dict["metadata"] = metadata
         if org_memberships is not UNSET:
             field_dict["org_memberships"] = org_memberships
-        if developer is not UNSET:
-            field_dict["developer"] = developer
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id")
-
         type = UserType(d.pop("type"))
 
         email = d.pop("email")
+
+        id = d.pop("id", UNSET)
 
         _created = d.pop("created", UNSET)
         created: Union[Unset, datetime.datetime]
@@ -128,18 +124,15 @@ class User:
         else:
             org_memberships = UserOrgMemberships.from_dict(_org_memberships)
 
-        developer = d.pop("developer", UNSET)
-
         user = cls(
-            id=id,
             type=type,
             email=email,
+            id=id,
             created=created,
             updated=updated,
             seq=seq,
             metadata=metadata,
             org_memberships=org_memberships,
-            developer=developer,
         )
 
         user.additional_properties = d

@@ -2,7 +2,7 @@ from pathlib import Path
 
 import nox
 
-OPENAPI_URL = "https://prod.thenile.dev/openapi.yaml"
+OPENAPI_URL = "http://localhost:8080/openapi.yaml"
 
 ROOT = Path(__file__).parent
 GENERATE_REQUIREMENTS = ROOT / "openapi-generator-requirements"

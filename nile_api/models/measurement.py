@@ -1,8 +1,8 @@
-import datetime
 from typing import Any, Dict, List, Type, TypeVar
+import datetime
 
-import attr
 from dateutil.parser import isoparse
+import attr
 
 T = TypeVar("T", bound="Measurement")
 
@@ -12,10 +12,11 @@ class Measurement:
     """Measurements associated with this metric
 
     Attributes:
-        timestamp (datetime.datetime): An ISO-8601 formatted date-time https://www.iso.org/iso-8601-date-and-time-
-            format.html that represents the time the datapoint was created
-        value (float): the measured value
-        instance_id (str): InstanceId of the Nile instance this datapoint is related to
+        timestamp (datetime.datetime): An ISO-8601 formatted date-time, i.e., 2018-11-13T20:20:39+00:00, that represents
+            the time the measurement was created. Example: 2022-11-13 20:20:39+00:00.
+        value (float): the measured value Example: 11.8.
+        instance_id (str): InstanceId of the Nile instance this measurement is related to Example:
+            inst_02qwn8bovgrXdNx8XlVzbU.
     """
 
     timestamp: datetime.datetime

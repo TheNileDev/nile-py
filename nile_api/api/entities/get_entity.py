@@ -52,7 +52,7 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[Entity]:
-    """Get Entity
+    """Get an entity
 
     Args:
         workspace (str):
@@ -82,7 +82,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Entity]:
-    """Get Entity
+    """Get an entity
 
     Args:
         workspace (str):
@@ -105,7 +105,7 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[Entity]:
-    """Get Entity
+    """Get an entity
 
     Args:
         workspace (str):
@@ -133,7 +133,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Entity]:
-    """Get Entity
+    """Get an entity
 
     Args:
         workspace (str):

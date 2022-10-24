@@ -34,7 +34,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[AggregationResponse]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[AggregationResponse]:
     if response.status_code == 200:
         response_200 = AggregationResponse.from_dict(response.json())
 
@@ -42,7 +44,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[AggregationResponse
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[AggregationResponse]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[AggregationResponse]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -58,7 +62,7 @@ def sync_detailed(
     client: Client,
     json_body: AggregationRequest,
 ) -> Response[AggregationResponse]:
-    """Aggregation result for the metric
+    """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
         workspace (str):
@@ -91,7 +95,7 @@ def sync(
     client: Client,
     json_body: AggregationRequest,
 ) -> Optional[AggregationResponse]:
-    """Aggregation result for the metric
+    """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
         workspace (str):
@@ -117,7 +121,7 @@ async def asyncio_detailed(
     client: Client,
     json_body: AggregationRequest,
 ) -> Response[AggregationResponse]:
-    """Aggregation result for the metric
+    """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
         workspace (str):
@@ -148,7 +152,7 @@ async def asyncio(
     client: Client,
     json_body: AggregationRequest,
 ) -> Optional[AggregationResponse]:
-    """Aggregation result for the metric
+    """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
         workspace (str):

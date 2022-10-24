@@ -12,12 +12,14 @@ class UserOrgMemberships:
     """
     Example:
         {'org_02qaCO8qNEmfpAcomojhLb': {'joined': datetime.datetime(2022, 8, 9, 10, 27, 30, 956079), 'metadata':
-            {'role': 'admin'}}, 'org_02qdS9KPAnG6Pt5XFAomu6': {'joined': datetime.datetime(2022, 8, 3, 17, 30, 0, 295581),
-            'metadata': {'role': 'member'}}}
+            {'region': 'us-east-2'}}, 'org_02qdS9KPAnG6Pt5XFAomu6': {'joined': datetime.datetime(2022, 8, 3, 17, 30, 0,
+            295581), 'metadata': {'region': 'us-west-2'}}}
 
     """
 
-    additional_properties: Dict[str, OrgMembership] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, OrgMembership] = attr.ib(
+        init=False, factory=dict
+    )
 
     def to_dict(self) -> Dict[str, Any]:
 

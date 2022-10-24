@@ -27,6 +27,8 @@ class ErrorErrorCode(str, Enum):
     INVALID_POLICY_VARIABLE = "invalid_policy_variable"
     FORBIDDEN = "forbidden"
     METRIC_NOT_FOUND = "metric_not_found"
+    CONFLICT = "conflict"
+    ACCESS_TOKEN_NOT_FOUND = "access_token_not_found"
 
     def __str__(self) -> str:
         return str(self.value)

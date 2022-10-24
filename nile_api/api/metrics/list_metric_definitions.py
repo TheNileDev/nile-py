@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.list_metric_definitions_response import ListMetricDefinitionsResponse
+from ...models.list_metric_definitions_response import (
+    ListMetricDefinitionsResponse,
+)
 from ...types import Response
 
 
@@ -54,7 +56,7 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[ListMetricDefinitionsResponse]:
-    """List metrics defined in workspace
+    """List metric definitions in a workspace
 
     Args:
         workspace (str):
@@ -81,7 +83,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[ListMetricDefinitionsResponse]:
-    """List metrics defined in workspace
+    """List metric definitions in a workspace
 
     Args:
         workspace (str):
@@ -101,7 +103,7 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[ListMetricDefinitionsResponse]:
-    """List metrics defined in workspace
+    """List metric definitions in a workspace
 
     Args:
         workspace (str):
@@ -126,7 +128,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[ListMetricDefinitionsResponse]:
-    """List metrics defined in workspace
+    """List metric definitions in a workspace
 
     Args:
         workspace (str):

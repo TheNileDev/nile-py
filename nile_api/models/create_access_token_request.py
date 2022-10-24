@@ -1,45 +1,44 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
-import datetime
 
-from dateutil.parser import isoparse
 import attr
 
 from ..models.metadata import Metadata
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="SubjectOrgMembership")
+T = TypeVar("T", bound="CreateAccessTokenRequest")
 
 
 @attr.s(auto_attribs=True)
-class SubjectOrgMembership:
+class CreateAccessTokenRequest:
     """
-    Example:
-        {'joined': datetime.datetime(2022, 8, 9, 10, 27, 30, 956079), 'metadata': {'role': 'admin'}}
-
     Attributes:
-        joined (Union[Unset, datetime.datetime]):
+        label (str): The human-friendly label of the access token
+        description (Union[Unset, str]): The intended use of the token
         metadata (Union[Unset, Metadata]): Arbitrary metadata. Example: {'location': 'US', 'age': 21, 'active': True,
             'name': {'first': 'John', 'last': 'Doe'}}.
     """
 
-    joined: Union[Unset, datetime.datetime] = UNSET
+    label: str
+    description: Union[Unset, str] = UNSET
     metadata: Union[Unset, Metadata] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        joined: Union[Unset, str] = UNSET
-        if not isinstance(self.joined, Unset):
-            joined = self.joined.isoformat()
-
+        label = self.label
+        description = self.description
         metadata: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.metadata, Unset):
             metadata = self.metadata.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if joined is not UNSET:
-            field_dict["joined"] = joined
+        field_dict.update(
+            {
+                "label": label,
+            }
+        )
+        if description is not UNSET:
+            field_dict["description"] = description
         if metadata is not UNSET:
             field_dict["metadata"] = metadata
 
@@ -48,12 +47,9 @@ class SubjectOrgMembership:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        _joined = d.pop("joined", UNSET)
-        joined: Union[Unset, datetime.datetime]
-        if isinstance(_joined, Unset):
-            joined = UNSET
-        else:
-            joined = isoparse(_joined)
+        label = d.pop("label")
+
+        description = d.pop("description", UNSET)
 
         _metadata = d.pop("metadata", UNSET)
         metadata: Union[Unset, Metadata]
@@ -62,13 +58,14 @@ class SubjectOrgMembership:
         else:
             metadata = Metadata.from_dict(_metadata)
 
-        subject_org_membership = cls(
-            joined=joined,
+        create_access_token_request = cls(
+            label=label,
+            description=description,
             metadata=metadata,
         )
 
-        subject_org_membership.additional_properties = d
-        return subject_org_membership
+        create_access_token_request.additional_properties = d
+        return create_access_token_request
 
     @property
     def additional_keys(self) -> List[str]:

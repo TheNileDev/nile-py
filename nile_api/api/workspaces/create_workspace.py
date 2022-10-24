@@ -3,14 +3,12 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.create_workspace_request import CreateWorkspaceRequest
 from ...models.workspace import Workspace
 from ...types import Response
 
 
 def _get_kwargs(
     *,
-    json_body: CreateWorkspaceRequest,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/workspaces".format(client.base_url)
@@ -24,7 +22,6 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "json": json_body.to_dict(),
     }
 
 
@@ -47,7 +44,6 @@ def _build_response(*, response: httpx.Response) -> Response[Workspace]:
 
 def sync_detailed(
     *,
-    json_body: CreateWorkspaceRequest,
     client: Client,
 ) -> Response[Workspace]:
     """Create a workspace
@@ -58,7 +54,6 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         client=client,
-        json_body=json_body,
     )
 
     response = httpx.request(
@@ -71,7 +66,6 @@ def sync_detailed(
 
 def sync(
     *,
-    json_body: CreateWorkspaceRequest,
     client: Client,
 ) -> Optional[Workspace]:
     """Create a workspace
@@ -82,13 +76,11 @@ def sync(
 
     return sync_detailed(
         client=client,
-        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
-    json_body: CreateWorkspaceRequest,
     client: Client,
 ) -> Response[Workspace]:
     """Create a workspace
@@ -99,7 +91,6 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         client=client,
-        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -110,7 +101,6 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    json_body: CreateWorkspaceRequest,
     client: Client,
 ) -> Optional[Workspace]:
     """Create a workspace
@@ -122,6 +112,5 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
-            json_body=json_body,
         )
     ).parsed

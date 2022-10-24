@@ -1,35 +1,31 @@
-from typing import Any, Dict, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
-from ...types import UNSET, Response, Unset
+from ...types import Response
 
 
 def _get_kwargs(
+    workspace: str,
+    org: str,
+    user: str,
     *,
     client: Client,
-    redirect_to: Union[Unset, None, str] = UNSET,
 ) -> Dict[str, Any]:
-    url = "{}/auth/oauth/google".format(client.base_url)
+    url = "{}/workspaces/{workspace}/orgs/{org}/users/{user}".format(
+        client.base_url, workspace=workspace, org=org, user=user
+    )
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    params: Dict[str, Any] = {}
-    params["redirect_to"] = redirect_to
-
-    params = {
-        k: v for k, v in params.items() if v is not UNSET and v is not None
-    }
-
     return {
-        "method": "get",
+        "method": "delete",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "params": params,
     }
 
 
@@ -43,22 +39,28 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 
 
 def sync_detailed(
+    workspace: str,
+    org: str,
+    user: str,
     *,
     client: Client,
-    redirect_to: Union[Unset, None, str] = UNSET,
 ) -> Response[Any]:
-    """Start the developer Google OAuth flow
+    """Remove a user from an organization by user id
 
     Args:
-        redirect_to (Union[Unset, None, str]):
+        workspace (str):
+        org (str):
+        user (str):
 
     Returns:
         Response[Any]
     """
 
     kwargs = _get_kwargs(
+        workspace=workspace,
+        org=org,
+        user=user,
         client=client,
-        redirect_to=redirect_to,
     )
 
     response = httpx.request(
@@ -70,22 +72,28 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
+    workspace: str,
+    org: str,
+    user: str,
     *,
     client: Client,
-    redirect_to: Union[Unset, None, str] = UNSET,
 ) -> Response[Any]:
-    """Start the developer Google OAuth flow
+    """Remove a user from an organization by user id
 
     Args:
-        redirect_to (Union[Unset, None, str]):
+        workspace (str):
+        org (str):
+        user (str):
 
     Returns:
         Response[Any]
     """
 
     kwargs = _get_kwargs(
+        workspace=workspace,
+        org=org,
+        user=user,
         client=client,
-        redirect_to=redirect_to,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:

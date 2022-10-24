@@ -4,66 +4,57 @@ import datetime
 from dateutil.parser import isoparse
 import attr
 
-from ..models.organization_type import OrganizationType
+from ..models.access_token_info_metadata import AccessTokenInfoMetadata
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Organization")
+T = TypeVar("T", bound="AccessTokenInfo")
 
 
 @attr.s(auto_attribs=True)
-class Organization:
+class AccessTokenInfo:
     """
     Attributes:
         id (str):
-        type (OrganizationType):
-        name (str):
-        creator (str): ID of the user who created this organization
+        label (str): The human-friendly label of the access token
+        description (Union[Unset, str]): The intended use of the token
+        metadata (Union[Unset, AccessTokenInfoMetadata]): Arbitrary metadata. Example: {'location': 'US', 'age': 21,
+            'active': True, 'name': {'first': 'John', 'last': 'Doe'}}.
         created (Union[Unset, datetime.datetime]):
-        updated (Union[Unset, datetime.datetime]):
-        seq (Union[Unset, int]):
     """
 
     id: str
-    type: OrganizationType
-    name: str
-    creator: str
+    label: str
+    description: Union[Unset, str] = UNSET
+    metadata: Union[Unset, AccessTokenInfoMetadata] = UNSET
     created: Union[Unset, datetime.datetime] = UNSET
-    updated: Union[Unset, datetime.datetime] = UNSET
-    seq: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
-        type = self.type.value
+        label = self.label
+        description = self.description
+        metadata: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.metadata, Unset):
+            metadata = self.metadata.to_dict()
 
-        name = self.name
-        creator = self.creator
         created: Union[Unset, str] = UNSET
         if not isinstance(self.created, Unset):
             created = self.created.isoformat()
-
-        updated: Union[Unset, str] = UNSET
-        if not isinstance(self.updated, Unset):
-            updated = self.updated.isoformat()
-
-        seq = self.seq
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "id": id,
-                "type": type,
-                "name": name,
-                "creator": creator,
+                "label": label,
             }
         )
+        if description is not UNSET:
+            field_dict["description"] = description
+        if metadata is not UNSET:
+            field_dict["metadata"] = metadata
         if created is not UNSET:
             field_dict["created"] = created
-        if updated is not UNSET:
-            field_dict["updated"] = updated
-        if seq is not UNSET:
-            field_dict["seq"] = seq
 
         return field_dict
 
@@ -72,11 +63,16 @@ class Organization:
         d = src_dict.copy()
         id = d.pop("id")
 
-        type = OrganizationType(d.pop("type"))
+        label = d.pop("label")
 
-        name = d.pop("name")
+        description = d.pop("description", UNSET)
 
-        creator = d.pop("creator")
+        _metadata = d.pop("metadata", UNSET)
+        metadata: Union[Unset, AccessTokenInfoMetadata]
+        if isinstance(_metadata, Unset):
+            metadata = UNSET
+        else:
+            metadata = AccessTokenInfoMetadata.from_dict(_metadata)
 
         _created = d.pop("created", UNSET)
         created: Union[Unset, datetime.datetime]
@@ -85,27 +81,16 @@ class Organization:
         else:
             created = isoparse(_created)
 
-        _updated = d.pop("updated", UNSET)
-        updated: Union[Unset, datetime.datetime]
-        if isinstance(_updated, Unset):
-            updated = UNSET
-        else:
-            updated = isoparse(_updated)
-
-        seq = d.pop("seq", UNSET)
-
-        organization = cls(
+        access_token_info = cls(
             id=id,
-            type=type,
-            name=name,
-            creator=creator,
+            label=label,
+            description=description,
+            metadata=metadata,
             created=created,
-            updated=updated,
-            seq=seq,
         )
 
-        organization.additional_properties = d
-        return organization
+        access_token_info.additional_properties = d
+        return access_token_info
 
     @property
     def additional_keys(self) -> List[str]:

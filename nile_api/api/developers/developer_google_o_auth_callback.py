@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.developer_google_o_auth_response import DeveloperGoogleOAuthResponse
+from ...models.developer_google_o_auth_response import (
+    DeveloperGoogleOAuthResponse,
+)
 from ...types import UNSET, Response, Unset
 
 
@@ -23,7 +25,9 @@ def _get_kwargs(
 
     params["state"] = state
 
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+    params = {
+        k: v for k, v in params.items() if v is not UNSET and v is not None
+    }
 
     return {
         "method": "get",
