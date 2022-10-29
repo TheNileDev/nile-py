@@ -14,7 +14,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/workspaces/{workspace}/access-tokens/{id}".format(
+    url = "{}/workspaces/{workspace}/access_tokens/{id}".format(
         client.base_url, workspace=workspace, id=id
     )
 
@@ -22,7 +22,7 @@ def _get_kwargs(
     cookies: Dict[str, Any] = client.get_cookies()
 
     return {
-        "method": "put",
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -65,7 +65,9 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[Union[AccessTokenInfo, Error]]:
-    """Update an access token
+    """Get access token by id
+
+     Get information about a workspace access token.
 
     Args:
         workspace (str):
@@ -95,7 +97,9 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[AccessTokenInfo, Error]]:
-    """Update an access token
+    """Get access token by id
+
+     Get information about a workspace access token.
 
     Args:
         workspace (str):
@@ -118,7 +122,9 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[Union[AccessTokenInfo, Error]]:
-    """Update an access token
+    """Get access token by id
+
+     Get information about a workspace access token.
 
     Args:
         workspace (str):
@@ -146,7 +152,9 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[AccessTokenInfo, Error]]:
-    """Update an access token
+    """Get access token by id
+
+     Get information about a workspace access token.
 
     Args:
         workspace (str):

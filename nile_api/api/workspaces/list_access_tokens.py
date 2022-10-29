@@ -13,7 +13,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/workspaces/{workspace}/access-tokens".format(
+    url = "{}/workspaces/{workspace}/access_tokens".format(
         client.base_url, workspace=workspace
     )
 
@@ -70,7 +70,9 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[Union[Error, List[AccessTokenInfo]]]:
-    """List access tokens in a workspace
+    """List access tokens
+
+     List all workspace access tokens.
 
     Args:
         workspace (str):
@@ -97,7 +99,9 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Error, List[AccessTokenInfo]]]:
-    """List access tokens in a workspace
+    """List access tokens
+
+     List all workspace access tokens.
 
     Args:
         workspace (str):
@@ -117,7 +121,9 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[Union[Error, List[AccessTokenInfo]]]:
-    """List access tokens in a workspace
+    """List access tokens
+
+     List all workspace access tokens.
 
     Args:
         workspace (str):
@@ -142,7 +148,9 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Error, List[AccessTokenInfo]]]:
-    """List access tokens in a workspace
+    """List access tokens
+
+     List all workspace access tokens.
 
     Args:
         workspace (str):

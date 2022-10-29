@@ -1,11 +1,11 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ...client import Client
 from ...models.instance import Instance
 from ...models.update_instance_request import UpdateInstanceRequest
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
@@ -16,6 +16,7 @@ def _get_kwargs(
     *,
     client: Client,
     json_body: UpdateInstanceRequest,
+    if_match: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/workspaces/{workspace}/orgs/{org}/instances/{type}/{id}".format(
         client.base_url, workspace=workspace, org=org, type=type, id=id
@@ -23,6 +24,9 @@ def _get_kwargs(
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+
+    if not isinstance(if_match, Unset):
+        headers["If-Match"] = if_match
 
     json_json_body = json_body.to_dict()
 
@@ -61,14 +65,19 @@ def sync_detailed(
     *,
     client: Client,
     json_body: UpdateInstanceRequest,
+    if_match: Union[Unset, str] = UNSET,
 ) -> Response[Instance]:
-    """Update an instance
+    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
+    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
+    provided then a 412 status will be returned. If the header is not provided then this update will
+    overwrite any other updates
 
     Args:
         workspace (str):
         org (str):
         type (str):
         id (str):
+        if_match (Union[Unset, str]):
         json_body (UpdateInstanceRequest):
 
     Returns:
@@ -82,6 +91,7 @@ def sync_detailed(
         id=id,
         client=client,
         json_body=json_body,
+        if_match=if_match,
     )
 
     response = httpx.request(
@@ -100,14 +110,19 @@ def sync(
     *,
     client: Client,
     json_body: UpdateInstanceRequest,
+    if_match: Union[Unset, str] = UNSET,
 ) -> Optional[Instance]:
-    """Update an instance
+    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
+    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
+    provided then a 412 status will be returned. If the header is not provided then this update will
+    overwrite any other updates
 
     Args:
         workspace (str):
         org (str):
         type (str):
         id (str):
+        if_match (Union[Unset, str]):
         json_body (UpdateInstanceRequest):
 
     Returns:
@@ -121,6 +136,7 @@ def sync(
         id=id,
         client=client,
         json_body=json_body,
+        if_match=if_match,
     ).parsed
 
 
@@ -132,14 +148,19 @@ async def asyncio_detailed(
     *,
     client: Client,
     json_body: UpdateInstanceRequest,
+    if_match: Union[Unset, str] = UNSET,
 ) -> Response[Instance]:
-    """Update an instance
+    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
+    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
+    provided then a 412 status will be returned. If the header is not provided then this update will
+    overwrite any other updates
 
     Args:
         workspace (str):
         org (str):
         type (str):
         id (str):
+        if_match (Union[Unset, str]):
         json_body (UpdateInstanceRequest):
 
     Returns:
@@ -153,6 +174,7 @@ async def asyncio_detailed(
         id=id,
         client=client,
         json_body=json_body,
+        if_match=if_match,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -169,14 +191,19 @@ async def asyncio(
     *,
     client: Client,
     json_body: UpdateInstanceRequest,
+    if_match: Union[Unset, str] = UNSET,
 ) -> Optional[Instance]:
-    """Update an instance
+    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
+    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
+    provided then a 412 status will be returned. If the header is not provided then this update will
+    overwrite any other updates
 
     Args:
         workspace (str):
         org (str):
         type (str):
         id (str):
+        if_match (Union[Unset, str]):
         json_body (UpdateInstanceRequest):
 
     Returns:
@@ -191,5 +218,6 @@ async def asyncio(
             id=id,
             client=client,
             json_body=json_body,
+            if_match=if_match,
         )
     ).parsed

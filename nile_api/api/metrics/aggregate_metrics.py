@@ -1,10 +1,10 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import httpx
 
 from ...client import Client
 from ...models.aggregation_request import AggregationRequest
-from ...models.aggregation_response import AggregationResponse
+from ...models.bucket import Bucket
 from ...types import Response
 
 
@@ -34,19 +34,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[AggregationResponse]:
+def _parse_response(*, response: httpx.Response) -> Optional[List[Bucket]]:
     if response.status_code == 200:
-        response_200 = AggregationResponse.from_dict(response.json())
+        response_200 = []
+        _response_200 = response.json()
+        for response_200_item_data in _response_200:
+            response_200_item = Bucket.from_dict(response_200_item_data)
+
+            response_200.append(response_200_item)
 
         return response_200
     return None
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[AggregationResponse]:
+def _build_response(*, response: httpx.Response) -> Response[List[Bucket]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -61,7 +62,7 @@ def sync_detailed(
     *,
     client: Client,
     json_body: AggregationRequest,
-) -> Response[AggregationResponse]:
+) -> Response[List[Bucket]]:
     """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
@@ -70,7 +71,7 @@ def sync_detailed(
         json_body (AggregationRequest):
 
     Returns:
-        Response[AggregationResponse]
+        Response[List[Bucket]]
     """
 
     kwargs = _get_kwargs(
@@ -94,7 +95,7 @@ def sync(
     *,
     client: Client,
     json_body: AggregationRequest,
-) -> Optional[AggregationResponse]:
+) -> Optional[List[Bucket]]:
     """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
@@ -103,7 +104,7 @@ def sync(
         json_body (AggregationRequest):
 
     Returns:
-        Response[AggregationResponse]
+        Response[List[Bucket]]
     """
 
     return sync_detailed(
@@ -120,7 +121,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     json_body: AggregationRequest,
-) -> Response[AggregationResponse]:
+) -> Response[List[Bucket]]:
     """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
@@ -129,7 +130,7 @@ async def asyncio_detailed(
         json_body (AggregationRequest):
 
     Returns:
-        Response[AggregationResponse]
+        Response[List[Bucket]]
     """
 
     kwargs = _get_kwargs(
@@ -151,7 +152,7 @@ async def asyncio(
     *,
     client: Client,
     json_body: AggregationRequest,
-) -> Optional[AggregationResponse]:
+) -> Optional[List[Bucket]]:
     """Perform sum, min, max, avg, and percentile aggregations over a metric
 
     Args:
@@ -160,7 +161,7 @@ async def asyncio(
         json_body (AggregationRequest):
 
     Returns:
-        Response[AggregationResponse]
+        Response[List[Bucket]]
     """
 
     return (
