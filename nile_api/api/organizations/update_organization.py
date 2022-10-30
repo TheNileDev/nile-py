@@ -4,6 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.organization import Organization
+from ...models.update_organization_request import UpdateOrganizationRequest
 from ...types import Response
 
 
@@ -12,6 +13,7 @@ def _get_kwargs(
     org: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationRequest,
 ) -> Dict[str, Any]:
     url = "{}/workspaces/{workspace}/orgs/{org}".format(
         client.base_url, workspace=workspace, org=org
@@ -20,12 +22,15 @@ def _get_kwargs(
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
+    json_json_body = json_body.to_dict()
+
     return {
         "method": "put",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
@@ -51,12 +56,14 @@ def sync_detailed(
     org: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationRequest,
 ) -> Response[Organization]:
     """Update an organization
 
     Args:
         workspace (str):
         org (str):
+        json_body (UpdateOrganizationRequest):
 
     Returns:
         Response[Organization]
@@ -66,6 +73,7 @@ def sync_detailed(
         workspace=workspace,
         org=org,
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -81,12 +89,14 @@ def sync(
     org: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationRequest,
 ) -> Optional[Organization]:
     """Update an organization
 
     Args:
         workspace (str):
         org (str):
+        json_body (UpdateOrganizationRequest):
 
     Returns:
         Response[Organization]
@@ -96,6 +106,7 @@ def sync(
         workspace=workspace,
         org=org,
         client=client,
+        json_body=json_body,
     ).parsed
 
 
@@ -104,12 +115,14 @@ async def asyncio_detailed(
     org: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationRequest,
 ) -> Response[Organization]:
     """Update an organization
 
     Args:
         workspace (str):
         org (str):
+        json_body (UpdateOrganizationRequest):
 
     Returns:
         Response[Organization]
@@ -119,6 +132,7 @@ async def asyncio_detailed(
         workspace=workspace,
         org=org,
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -132,12 +146,14 @@ async def asyncio(
     org: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationRequest,
 ) -> Optional[Organization]:
     """Update an organization
 
     Args:
         workspace (str):
         org (str):
+        json_body (UpdateOrganizationRequest):
 
     Returns:
         Response[Organization]
@@ -148,5 +164,6 @@ async def asyncio(
             workspace=workspace,
             org=org,
             client=client,
+            json_body=json_body,
         )
     ).parsed

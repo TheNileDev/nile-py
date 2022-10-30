@@ -9,6 +9,7 @@ ROOT = Path(__file__).parent
 OPENAPI_PATH = ROOT / "spec/api.yaml"
 GENERATE_REQUIREMENTS = ROOT / "openapi-generator-requirements"
 GENERATE_CONFIG = ROOT / "openapi-generator-config.yml"
+TESTS = ROOT / "tests/"
 
 nox.options.sessions = []
 
@@ -25,7 +26,7 @@ def session(default=True, **kwargs):
 @session(python=["3.7", "3.8", "3.9", "3.10", "pypy3"])
 def tests(session):
     session.install("pytest")
-    session.run("pytest")
+    session.run("pytest", "-s", str(TESTS))
 
 
 @session(tags=["build"])
@@ -55,6 +56,14 @@ def regenerate(session):
     # See openapi-generators/openapi-python-client#684
     with session.chdir(ROOT.parent):
         session.run("curl", OPENAPI_URL, "-o", str(OPENAPI_PATH))
+        # Temp hack until THE-831 is fixed and deployed to prod
+        session.run(
+            "sed",
+            "-I",
+            ".bak",
+            "s#'\\*/\\*'#application/json#",
+            str(OPENAPI_PATH),
+        )
         session.run(
             "openapi-python-client",
             "update",

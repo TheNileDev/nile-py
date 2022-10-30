@@ -4,6 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.entity import Entity
+from ...models.update_entity_request import UpdateEntityRequest
 from ...types import Response
 
 
@@ -12,6 +13,7 @@ def _get_kwargs(
     type: str,
     *,
     client: Client,
+    json_body: UpdateEntityRequest,
 ) -> Dict[str, Any]:
     url = "{}/workspaces/{workspace}/entities/{type}".format(
         client.base_url, workspace=workspace, type=type
@@ -20,12 +22,15 @@ def _get_kwargs(
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
+    json_json_body = json_body.to_dict()
+
     return {
         "method": "put",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
@@ -51,12 +56,14 @@ def sync_detailed(
     type: str,
     *,
     client: Client,
+    json_body: UpdateEntityRequest,
 ) -> Response[Entity]:
     """Update an entity
 
     Args:
         workspace (str):
         type (str):
+        json_body (UpdateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -66,6 +73,7 @@ def sync_detailed(
         workspace=workspace,
         type=type,
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -81,12 +89,14 @@ def sync(
     type: str,
     *,
     client: Client,
+    json_body: UpdateEntityRequest,
 ) -> Optional[Entity]:
     """Update an entity
 
     Args:
         workspace (str):
         type (str):
+        json_body (UpdateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -96,6 +106,7 @@ def sync(
         workspace=workspace,
         type=type,
         client=client,
+        json_body=json_body,
     ).parsed
 
 
@@ -104,12 +115,14 @@ async def asyncio_detailed(
     type: str,
     *,
     client: Client,
+    json_body: UpdateEntityRequest,
 ) -> Response[Entity]:
     """Update an entity
 
     Args:
         workspace (str):
         type (str):
+        json_body (UpdateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -119,6 +132,7 @@ async def asyncio_detailed(
         workspace=workspace,
         type=type,
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -132,12 +146,14 @@ async def asyncio(
     type: str,
     *,
     client: Client,
+    json_body: UpdateEntityRequest,
 ) -> Optional[Entity]:
     """Update an entity
 
     Args:
         workspace (str):
         type (str):
+        json_body (UpdateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -148,5 +164,6 @@ async def asyncio(
             workspace=workspace,
             type=type,
             client=client,
+            json_body=json_body,
         )
     ).parsed

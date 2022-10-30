@@ -4,17 +4,21 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
+from ...models.token import Token
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    json_body: Token,
 ) -> Dict[str, Any]:
     url = "{}/auth/validate".format(client.base_url)
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+
+    json_json_body = json_body.to_dict()
 
     return {
         "method": "post",
@@ -22,6 +26,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
@@ -52,8 +57,12 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
+    json_body: Token,
 ) -> Response[Union[Any, Error]]:
     """Validate a developer token
+
+    Args:
+        json_body (Token):
 
     Returns:
         Response[Union[Any, Error]]
@@ -61,6 +70,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -74,8 +84,12 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
+    json_body: Token,
 ) -> Optional[Union[Any, Error]]:
     """Validate a developer token
+
+    Args:
+        json_body (Token):
 
     Returns:
         Response[Union[Any, Error]]
@@ -83,14 +97,19 @@ def sync(
 
     return sync_detailed(
         client=client,
+        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
+    json_body: Token,
 ) -> Response[Union[Any, Error]]:
     """Validate a developer token
+
+    Args:
+        json_body (Token):
 
     Returns:
         Response[Union[Any, Error]]
@@ -98,6 +117,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -109,8 +129,12 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
+    json_body: Token,
 ) -> Optional[Union[Any, Error]]:
     """Validate a developer token
+
+    Args:
+        json_body (Token):
 
     Returns:
         Response[Union[Any, Error]]
@@ -119,5 +143,6 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            json_body=json_body,
         )
     ).parsed

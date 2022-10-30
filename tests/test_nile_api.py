@@ -8,7 +8,6 @@ def test_toplevel_contents():
     import nile_api
 
     keys = [key for key in dir(nile_api) if not key.startswith("_")]
-    print(keys)
     assert set(keys) == set(["AuthenticatedClient", "Client", "client"])
 
 
@@ -18,6 +17,7 @@ def test_packages():
 
     import nile_api.api
 
+    print ("testing nile client from: " + str(nile_api.api.__path__))
     subpkgs = [
         pkg.name for pkg in pkgutil.walk_packages(nile_api.api.__path__)
     ]
@@ -36,7 +36,6 @@ def test_packages():
     for subpkg in subpkgs:
         mod = importlib.import_module("nile_api.api." + subpkg)
         pub_funs = [f.name for f in pkgutil.walk_packages(mod.__path__)]
-        print(pub_funs)
 
         match subpkg:
             case "workspaces":

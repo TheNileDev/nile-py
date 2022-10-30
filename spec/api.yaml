@@ -170,7 +170,7 @@ paths:
       operationId: loginDeveloper
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/LoginInfo'
         required: true
@@ -195,7 +195,7 @@ paths:
       operationId: validateDeveloper
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/Token'
         required: true
@@ -366,7 +366,7 @@ paths:
       operationId: createDeveloper
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateUserRequest'
         required: true
@@ -403,7 +403,7 @@ paths:
       - $ref: '#/components/parameters/workspace'
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateEntityRequest'
         required: true
@@ -448,7 +448,7 @@ paths:
           type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/UpdateEntityRequest'
         required: true
@@ -909,7 +909,7 @@ paths:
           type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/AddUserToOrgRequest'
         required: true
@@ -946,7 +946,7 @@ paths:
       - $ref: '#/components/parameters/workspace'
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateOrganizationRequest'
         required: true
@@ -991,7 +991,7 @@ paths:
           type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/UpdateOrganizationRequest'
         required: true
@@ -1037,7 +1037,7 @@ paths:
           type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/UpdateOrganizationMembershipRequest'
         required: true
@@ -1168,7 +1168,7 @@ paths:
           type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateAccessTokenRequest'
         required: true
@@ -1315,7 +1315,7 @@ paths:
           type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/UpdateUserRequest'
         required: true
@@ -1363,7 +1363,7 @@ paths:
       operationId: createWorkspace
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateWorkspaceRequest'
         required: true
