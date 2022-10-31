@@ -37,6 +37,27 @@ To do so, run:
 
     nox -s regenerate
 
+You will want to test the results. First, validate that the client generated with the expected structure (packages and modules):
+
+To do so, run:
+
+.. code-block:: sh
+
+    nox -s tests
+    
+Then you'll want to do a quick smoke test and make sure the client actually works against Nile. 
+Currently we do it by running https://github.com/TheNileDev/examples/tree/main/quickstart-python example.
+Before running it you'll want to make sure that running the example will use the local client and not an installed one. 
+
+From the local nile-py repository directory run:
+
+.. code-block:: sh
+
+    export PYTHONPATH=`pwd`:$PYTHONPATH
+    venv/bin/python -c "import nile_api; print(str(nile_api.__path__))"
+    cd ../examples/quickstart-python
+    ./venv/bin/python src/all.py
+
 We pin the version of this generator itself in a requirements file.
 To update the version of the generator that will be used, run:
 

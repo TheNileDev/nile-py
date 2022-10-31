@@ -3,39 +3,43 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
+from ...models.create_access_token_request import CreateAccessTokenRequest
 from ...models.create_access_token_response import CreateAccessTokenResponse
 from ...types import Response
 
 
 def _get_kwargs(
     workspace: str,
-    id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Dict[str, Any]:
-    url = "{}/workspaces/{workspace}/access-tokens/{id}".format(
-        client.base_url, workspace=workspace, id=id
+    url = "{}/workspaces/{workspace}/access_tokens".format(
+        client.base_url, workspace=workspace
     )
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
+    json_json_body = json_body.to_dict()
+
     return {
-        "method": "delete",
+        "method": "post",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
 def _parse_response(
     *, response: httpx.Response
 ) -> Optional[CreateAccessTokenResponse]:
-    if response.status_code == 240:
-        response_240 = CreateAccessTokenResponse.from_dict(response.json())
+    if response.status_code == 201:
+        response_201 = CreateAccessTokenResponse.from_dict(response.json())
 
-        return response_240
+        return response_201
     return None
 
 
@@ -52,15 +56,18 @@ def _build_response(
 
 def sync_detailed(
     workspace: str,
-    id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Response[CreateAccessTokenResponse]:
-    """Delete an access token
+    """Create an access token
+
+     Create a workspace token. Workspace tokens have authorization to perform most actions within a
+    workspace.
 
     Args:
         workspace (str):
-        id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[CreateAccessTokenResponse]
@@ -68,8 +75,8 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         workspace=workspace,
-        id=id,
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -82,15 +89,18 @@ def sync_detailed(
 
 def sync(
     workspace: str,
-    id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Optional[CreateAccessTokenResponse]:
-    """Delete an access token
+    """Create an access token
+
+     Create a workspace token. Workspace tokens have authorization to perform most actions within a
+    workspace.
 
     Args:
         workspace (str):
-        id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[CreateAccessTokenResponse]
@@ -98,22 +108,25 @@ def sync(
 
     return sync_detailed(
         workspace=workspace,
-        id=id,
         client=client,
+        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     workspace: str,
-    id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Response[CreateAccessTokenResponse]:
-    """Delete an access token
+    """Create an access token
+
+     Create a workspace token. Workspace tokens have authorization to perform most actions within a
+    workspace.
 
     Args:
         workspace (str):
-        id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[CreateAccessTokenResponse]
@@ -121,8 +134,8 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         workspace=workspace,
-        id=id,
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -133,15 +146,18 @@ async def asyncio_detailed(
 
 async def asyncio(
     workspace: str,
-    id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Optional[CreateAccessTokenResponse]:
-    """Delete an access token
+    """Create an access token
+
+     Create a workspace token. Workspace tokens have authorization to perform most actions within a
+    workspace.
 
     Args:
         workspace (str):
-        id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[CreateAccessTokenResponse]
@@ -150,7 +166,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             workspace=workspace,
-            id=id,
             client=client,
+            json_body=json_body,
         )
     ).parsed

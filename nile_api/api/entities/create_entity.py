@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
+from ...models.create_entity_request import CreateEntityRequest
 from ...models.entity import Entity
 from ...types import Response
 
@@ -11,6 +12,7 @@ def _get_kwargs(
     workspace: str,
     *,
     client: Client,
+    json_body: CreateEntityRequest,
 ) -> Dict[str, Any]:
     url = "{}/workspaces/{workspace}/entities".format(
         client.base_url, workspace=workspace
@@ -19,12 +21,15 @@ def _get_kwargs(
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
+    json_json_body = json_body.to_dict()
+
     return {
         "method": "post",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
@@ -49,11 +54,13 @@ def sync_detailed(
     workspace: str,
     *,
     client: Client,
+    json_body: CreateEntityRequest,
 ) -> Response[Entity]:
     """Create an entity
 
     Args:
         workspace (str):
+        json_body (CreateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -62,6 +69,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         workspace=workspace,
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -76,11 +84,13 @@ def sync(
     workspace: str,
     *,
     client: Client,
+    json_body: CreateEntityRequest,
 ) -> Optional[Entity]:
     """Create an entity
 
     Args:
         workspace (str):
+        json_body (CreateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -89,6 +99,7 @@ def sync(
     return sync_detailed(
         workspace=workspace,
         client=client,
+        json_body=json_body,
     ).parsed
 
 
@@ -96,11 +107,13 @@ async def asyncio_detailed(
     workspace: str,
     *,
     client: Client,
+    json_body: CreateEntityRequest,
 ) -> Response[Entity]:
     """Create an entity
 
     Args:
         workspace (str):
+        json_body (CreateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -109,6 +122,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         workspace=workspace,
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -121,11 +135,13 @@ async def asyncio(
     workspace: str,
     *,
     client: Client,
+    json_body: CreateEntityRequest,
 ) -> Optional[Entity]:
     """Create an entity
 
     Args:
         workspace (str):
+        json_body (CreateEntityRequest):
 
     Returns:
         Response[Entity]
@@ -135,5 +151,6 @@ async def asyncio(
         await asyncio_detailed(
             workspace=workspace,
             client=client,
+            json_body=json_body,
         )
     ).parsed

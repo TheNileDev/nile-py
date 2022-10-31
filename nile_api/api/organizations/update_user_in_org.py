@@ -3,6 +3,9 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
+from ...models.update_organization_membership_request import (
+    UpdateOrganizationMembershipRequest,
+)
 from ...models.user import User
 from ...types import Response
 
@@ -13,6 +16,7 @@ def _get_kwargs(
     user: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationMembershipRequest,
 ) -> Dict[str, Any]:
     url = "{}/workspaces/{workspace}/orgs/{org}/users/{user}".format(
         client.base_url, workspace=workspace, org=org, user=user
@@ -21,12 +25,15 @@ def _get_kwargs(
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
+    json_json_body = json_body.to_dict()
+
     return {
         "method": "put",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
@@ -53,6 +60,7 @@ def sync_detailed(
     user: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationMembershipRequest,
 ) -> Response[User]:
     """Update a user in an organization
 
@@ -60,6 +68,7 @@ def sync_detailed(
         workspace (str):
         org (str):
         user (str):
+        json_body (UpdateOrganizationMembershipRequest):
 
     Returns:
         Response[User]
@@ -70,6 +79,7 @@ def sync_detailed(
         org=org,
         user=user,
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -86,6 +96,7 @@ def sync(
     user: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationMembershipRequest,
 ) -> Optional[User]:
     """Update a user in an organization
 
@@ -93,6 +104,7 @@ def sync(
         workspace (str):
         org (str):
         user (str):
+        json_body (UpdateOrganizationMembershipRequest):
 
     Returns:
         Response[User]
@@ -103,6 +115,7 @@ def sync(
         org=org,
         user=user,
         client=client,
+        json_body=json_body,
     ).parsed
 
 
@@ -112,6 +125,7 @@ async def asyncio_detailed(
     user: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationMembershipRequest,
 ) -> Response[User]:
     """Update a user in an organization
 
@@ -119,6 +133,7 @@ async def asyncio_detailed(
         workspace (str):
         org (str):
         user (str):
+        json_body (UpdateOrganizationMembershipRequest):
 
     Returns:
         Response[User]
@@ -129,6 +144,7 @@ async def asyncio_detailed(
         org=org,
         user=user,
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -143,6 +159,7 @@ async def asyncio(
     user: str,
     *,
     client: Client,
+    json_body: UpdateOrganizationMembershipRequest,
 ) -> Optional[User]:
     """Update a user in an organization
 
@@ -150,6 +167,7 @@ async def asyncio(
         workspace (str):
         org (str):
         user (str):
+        json_body (UpdateOrganizationMembershipRequest):
 
     Returns:
         Response[User]
@@ -161,5 +179,6 @@ async def asyncio(
             org=org,
             user=user,
             client=client,
+            json_body=json_body,
         )
     ).parsed

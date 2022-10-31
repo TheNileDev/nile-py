@@ -6,7 +6,6 @@ from .action import Action
 from .add_user_to_org_request import AddUserToOrgRequest
 from .aggregation_request import AggregationRequest
 from .aggregation_request_bucket_size import AggregationRequestBucketSize
-from .aggregation_response import AggregationResponse
 from .bucket import Bucket
 from .bucket_bucket_size import BucketBucketSize
 from .create_access_token_request import CreateAccessTokenRequest

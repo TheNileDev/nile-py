@@ -2,11 +2,14 @@ from pathlib import Path
 
 import nox
 
-OPENAPI_URL = "http://localhost:8080/openapi.yaml"
+OPENAPI_URL = "https://prod.thenile.dev/openapi.yaml"
+
 
 ROOT = Path(__file__).parent
+OPENAPI_PATH = ROOT / "spec/api.yaml"
 GENERATE_REQUIREMENTS = ROOT / "openapi-generator-requirements"
 GENERATE_CONFIG = ROOT / "openapi-generator-config.yml"
+TESTS = ROOT / "tests/"
 
 nox.options.sessions = []
 
@@ -23,7 +26,7 @@ def session(default=True, **kwargs):
 @session(python=["3.7", "3.8", "3.9", "3.10", "pypy3"])
 def tests(session):
     session.install("pytest")
-    session.run("pytest")
+    session.run("pytest", "-s", str(TESTS))
 
 
 @session(tags=["build"])
@@ -52,11 +55,20 @@ def regenerate(session):
     session.install("-r", f"{GENERATE_REQUIREMENTS}.txt")
     # See openapi-generators/openapi-python-client#684
     with session.chdir(ROOT.parent):
+        session.run("curl", OPENAPI_URL, "-o", str(OPENAPI_PATH))
+        # Temp hack until THE-831 is fixed and deployed to prod
+        session.run(
+            "sed",
+            "-I",
+            ".bak",
+            "s#'\\*/\\*'#application/json#",
+            str(OPENAPI_PATH),
+        )
         session.run(
             "openapi-python-client",
             "update",
-            "--url",
-            OPENAPI_URL,
+            "--path",
+            str(OPENAPI_PATH),
             "--config",
             str(GENERATE_CONFIG),  # str() until wntrblm/nox#649 is released
         )

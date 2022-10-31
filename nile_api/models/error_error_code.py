@@ -29,6 +29,7 @@ class ErrorErrorCode(str, Enum):
     METRIC_NOT_FOUND = "metric_not_found"
     CONFLICT = "conflict"
     ACCESS_TOKEN_NOT_FOUND = "access_token_not_found"
+    PRECONDITION_FAILED = "precondition_failed"
 
     def __str__(self) -> str:
         return str(self.value)

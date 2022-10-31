@@ -4,6 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.access_token_info import AccessTokenInfo
+from ...models.create_access_token_request import CreateAccessTokenRequest
 from ...models.error import Error
 from ...types import Response
 
@@ -13,20 +14,24 @@ def _get_kwargs(
     id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Dict[str, Any]:
-    url = "{}/workspaces/{workspace}/access-tokens/{id}".format(
+    url = "{}/workspaces/{workspace}/access_tokens/{id}".format(
         client.base_url, workspace=workspace, id=id
     )
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
+    json_json_body = json_body.to_dict()
+
     return {
-        "method": "get",
+        "method": "put",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
@@ -64,12 +69,16 @@ def sync_detailed(
     id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Response[Union[AccessTokenInfo, Error]]:
-    """Get access token by id
+    """Update an access token
+
+     Update a workspace access token.
 
     Args:
         workspace (str):
         id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[Union[AccessTokenInfo, Error]]
@@ -79,6 +88,7 @@ def sync_detailed(
         workspace=workspace,
         id=id,
         client=client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -94,12 +104,16 @@ def sync(
     id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Optional[Union[AccessTokenInfo, Error]]:
-    """Get access token by id
+    """Update an access token
+
+     Update a workspace access token.
 
     Args:
         workspace (str):
         id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[Union[AccessTokenInfo, Error]]
@@ -109,6 +123,7 @@ def sync(
         workspace=workspace,
         id=id,
         client=client,
+        json_body=json_body,
     ).parsed
 
 
@@ -117,12 +132,16 @@ async def asyncio_detailed(
     id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Response[Union[AccessTokenInfo, Error]]:
-    """Get access token by id
+    """Update an access token
+
+     Update a workspace access token.
 
     Args:
         workspace (str):
         id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[Union[AccessTokenInfo, Error]]
@@ -132,6 +151,7 @@ async def asyncio_detailed(
         workspace=workspace,
         id=id,
         client=client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -145,12 +165,16 @@ async def asyncio(
     id: str,
     *,
     client: Client,
+    json_body: CreateAccessTokenRequest,
 ) -> Optional[Union[AccessTokenInfo, Error]]:
-    """Get access token by id
+    """Update an access token
+
+     Update a workspace access token.
 
     Args:
         workspace (str):
         id (str):
+        json_body (CreateAccessTokenRequest):
 
     Returns:
         Response[Union[AccessTokenInfo, Error]]
@@ -161,5 +185,6 @@ async def asyncio(
             workspace=workspace,
             id=id,
             client=client,
+            json_body=json_body,
         )
     ).parsed

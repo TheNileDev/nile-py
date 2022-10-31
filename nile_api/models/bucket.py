@@ -12,8 +12,7 @@ T = TypeVar("T", bound="Bucket")
 
 @attr.s(auto_attribs=True)
 class Bucket:
-    """The buckets of the aggregation
-
+    """
     Attributes:
         timestamp (Union[Unset, datetime.datetime]): The timestamp when the bucket starts Example: 2021-01-01
             00:00:00+00:00.
