@@ -42,8 +42,9 @@ You will want to test the results. First, validate that the client generated wit
 To do so, run:
 
 .. code-block:: sh
-    nox -s tests
 
+    nox -s tests
+    
 Then you'll want to do a quick smoke test and make sure the client actually works against Nile. 
 Currently we do it by running https://github.com/TheNileDev/examples/tree/main/quickstart-python example.
 Before running it you'll want to make sure that running the example will use the local client and not an installed one. 
@@ -51,6 +52,7 @@ Before running it you'll want to make sure that running the example will use the
 From the local nile-py repository directory run:
 
 .. code-block:: sh
+
     export PYTHONPATH=`pwd`:$PYTHONPATH
     venv/bin/python -c "import nile_api; print(str(nile_api.__path__))"
     cd ../examples/quickstart-python
