@@ -2,6 +2,8 @@
 Nile API Python Client
 ======================
 
+This is the Python SDK for interacting with `Nile <https://thenile.dev>`_.
+
 Installing
 ----------
 
@@ -17,6 +19,36 @@ Usage
 -----
 
 Usage examples of the SDK can be found in the Nile `examples repository <https://github.com/TheNileDev/examples/>`_, within the directories with ``-python`` in their name.
+
+Basic Example:
+-----
+
+.. code-block:: python
+
+    import os
+
+    from nile_api import AuthenticatedClient
+    from nile_api.api.users import create_user, list_users
+    from nile_api.models.create_user_request import CreateUserRequest
+
+    # Create an authenticated client with a workspace auth token
+    client = AuthenticatedClient(base_url='https://prod.thenile.dev', token=os.environ.get("NILE_WS_TOKEN"))
+
+    # Create a user
+    user = create_user.sync(
+                workspace=os.environ.get("NILE_WORKSPACE"),
+                client=client,
+                json_body=CreateUserRequest(email="anon@anon.com", password="secret"),
+            )
+
+    # Log created user to console
+    print(user.email);
+
+    # List all users in the workspace
+    users = list_users.sync(client=client, workspace=os.environ.get("NILE_WORKSPACE"))
+    for user in users:
+        print(f"User {user.email!r} exists")
+
 
 Development
 -----------
