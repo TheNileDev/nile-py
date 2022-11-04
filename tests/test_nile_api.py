@@ -17,7 +17,7 @@ def test_packages():
 
     import nile_api.api
 
-    print ("testing nile client from: " + str(nile_api.api.__path__))
+    print("testing nile client from: " + str(nile_api.api.__path__))
     subpkgs = [
         pkg.name for pkg in pkgutil.walk_packages(nile_api.api.__path__)
     ]
@@ -96,8 +96,9 @@ def test_packages():
                 "token",
                 "update_user",
                 "validate_user",
+                "create_developer_owned_user"
             }
-        elif subpkg ==  "access":
+        elif subpkg == "access":
             assert set(pub_funs) == {
                 "create_policy",
                 "delete_policy",

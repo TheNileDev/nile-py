@@ -67,10 +67,11 @@ def sync_detailed(
     json_body: UpdateInstanceRequest,
     if_match: Union[Unset, str] = UNSET,
 ) -> Response[Instance]:
-    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
-    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
-    provided then a 412 status will be returned. If the header is not provided then this update will
-    overwrite any other updates
+    """Update an instance
+
+     If the instance field `seq` is provided in the `If-Match` header then this will be a Compare And Set
+    operation, i.e., if the seq of the current instance doesn't match the one provided then a 412 status
+    will be returned. If the header is not provided then this update will overwrite any other updates
 
     Args:
         workspace (str):
@@ -112,10 +113,11 @@ def sync(
     json_body: UpdateInstanceRequest,
     if_match: Union[Unset, str] = UNSET,
 ) -> Optional[Instance]:
-    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
-    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
-    provided then a 412 status will be returned. If the header is not provided then this update will
-    overwrite any other updates
+    """Update an instance
+
+     If the instance field `seq` is provided in the `If-Match` header then this will be a Compare And Set
+    operation, i.e., if the seq of the current instance doesn't match the one provided then a 412 status
+    will be returned. If the header is not provided then this update will overwrite any other updates
 
     Args:
         workspace (str):
@@ -150,10 +152,11 @@ async def asyncio_detailed(
     json_body: UpdateInstanceRequest,
     if_match: Union[Unset, str] = UNSET,
 ) -> Response[Instance]:
-    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
-    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
-    provided then a 412 status will be returned. If the header is not provided then this update will
-    overwrite any other updates
+    """Update an instance
+
+     If the instance field `seq` is provided in the `If-Match` header then this will be a Compare And Set
+    operation, i.e., if the seq of the current instance doesn't match the one provided then a 412 status
+    will be returned. If the header is not provided then this update will overwrite any other updates
 
     Args:
         workspace (str):
@@ -193,10 +196,11 @@ async def asyncio(
     json_body: UpdateInstanceRequest,
     if_match: Union[Unset, str] = UNSET,
 ) -> Optional[Instance]:
-    """Update an instance. If the instance field `seq` is provided in the `If-Match` header then this will
-    be a Compare And Set operation, i.e., if the seq of the current instance doesn't match the one
-    provided then a 412 status will be returned. If the header is not provided then this update will
-    overwrite any other updates
+    """Update an instance
+
+     If the instance field `seq` is provided in the `If-Match` header then this will be a Compare And Set
+    operation, i.e., if the seq of the current instance doesn't match the one provided then a 412 status
+    will be returned. If the header is not provided then this update will overwrite any other updates
 
     Args:
         workspace (str):
