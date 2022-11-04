@@ -21,7 +21,7 @@ Usage
 Usage examples of the SDK can be found in the Nile `examples repository <https://github.com/TheNileDev/examples/>`_, within the directories with ``-python`` in their name.
 
 Basic Example:
------
+---------------
 
 .. code-block:: python
 
