@@ -4,9 +4,9 @@ info:
   description: Making SaaS chill.
   contact:
     email: support@thenile.dev
-  version: 0.1.0-18eb8aa
+  version: 0.1.0-a49ba1d
 servers:
-- url: net-lb-prod-6faf2ab-850391211.us-west-2.elb.amazonaws.com
+- url: net-lb-dev-65c3449-561942752.us-west-2.elb.amazonaws.com
 tags:
 - name: access
   description: |
@@ -604,11 +604,12 @@ paths:
     put:
       tags:
       - entities
-      summary: "Update an instance. If the instance field `seq` is provided in the\
-        \ `If-Match` header then this will be a Compare And Set operation, i.e., if\
-        \ the seq of the current instance doesn't match the one provided then a 412\
-        \ status will be returned. If the header is not provided then this update\
-        \ will overwrite any other updates"
+      summary: Update an instance
+      description: "If the instance field `seq` is provided in the `If-Match` header\
+        \ then this will be a Compare And Set operation, i.e., if the seq of the current\
+        \ instance doesn't match the one provided then a 412 status will be returned.\
+        \ If the header is not provided then this update will overwrite any other\
+        \ updates"
       operationId: updateInstance
       parameters:
       - $ref: '#/components/parameters/workspace'
@@ -669,6 +670,49 @@ paths:
       responses:
         "204":
           description: Successful instance deletion
+    patch:
+      tags:
+      - entities
+      summary: Patch an Instance
+      description: "If the instance field `seq` is provided in the `If-Match` header\
+        \ then this will be a Compare And Set operation, i.e., if the seq of the current\
+        \ instance doesn't match the one provided then a 412 status will be returned.\
+        \ If the header is not provided then this patch may overwrite other updates"
+      operationId: patchInstance
+      parameters:
+      - $ref: '#/components/parameters/workspace'
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: If-Match
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              description: The JSONPatch operations you would like to apply to the
+                instance
+              items:
+                $ref: '#/components/schemas/PatchOperation'
+        required: true
+      responses:
+        "200":
+          description: The instance that has been patched
   /workspaces/{workspace}/instances/{type}:
     get:
       tags:
@@ -1208,6 +1252,27 @@ paths:
       responses:
         "204":
           description: Successful token deletion
+  /workspaces/{workspace}/internal/users:
+    post:
+      tags:
+      - users
+      summary: Create a user
+      operationId: createDeveloperOwnedUser
+      parameters:
+      - $ref: '#/components/parameters/workspace'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeveloperOwnedUserRequest'
+        required: true
+      responses:
+        "201":
+          description: The newly created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
   /me:
     get:
       tags:
@@ -1737,11 +1802,11 @@ components:
         email:
           type: string
           format: email
+        metadata:
+          $ref: '#/components/schemas/Metadata'
         password:
           minLength: 1
           type: string
-        metadata:
-          $ref: '#/components/schemas/Metadata'
     Entity:
       required:
       - id
@@ -1864,6 +1929,126 @@ components:
         id: lkc-123
         memory: 4096
         cpus: 4
+    JsonNode:
+      type: object
+      description: the value to add or replace
+    AddOperation:
+      required:
+      - op
+      - path
+      - value
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PatchOperation'
+      - type: object
+        properties:
+          path:
+            type: string
+            description: The JSON Pointer Path you want to add or replace
+            example: /address/street
+          op:
+            type: string
+            enum:
+            - add
+          value:
+            $ref: '#/components/schemas/JsonNode'
+    CopyOperation:
+      required:
+      - from
+      - op
+      - path
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PatchOperation'
+      - type: object
+        properties:
+          from:
+            type: string
+            description: The JSON Pointer path you would like to move/copy from
+            example: /address/street
+          path:
+            type: string
+            description: The JSON Pointer path you would like to move/copy to
+            example: /address/home/street
+          op:
+            type: string
+            enum:
+            - copy
+    MoveOperation:
+      required:
+      - from
+      - op
+      - path
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PatchOperation'
+      - type: object
+        properties:
+          from:
+            type: string
+            description: The JSON Pointer path you would like to move/copy from
+            example: /address/street
+          path:
+            type: string
+            description: The JSON Pointer path you would like to move/copy to
+            example: /address/home/street
+          op:
+            type: string
+            enum:
+            - move
+    PatchOperation:
+      required:
+      - op
+      type: object
+      properties:
+        op:
+          type: string
+      description: The JSONPatch operations you would like to apply to the instance
+      discriminator:
+        propertyName: op
+      oneOf:
+      - $ref: '#/components/schemas/AddOperation'
+      - $ref: '#/components/schemas/CopyOperation'
+      - $ref: '#/components/schemas/RemoveOperation'
+      - $ref: '#/components/schemas/MoveOperation'
+      - $ref: '#/components/schemas/ReplaceOperation'
+    RemoveOperation:
+      required:
+      - op
+      - path
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PatchOperation'
+      - type: object
+        properties:
+          path:
+            type: string
+            description: The JSON Pointer path to remove
+            example: /address/street
+          op:
+            type: string
+            enum:
+            - remove
+    ReplaceOperation:
+      required:
+      - op
+      - path
+      - value
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PatchOperation'
+      - type: object
+        properties:
+          path:
+            type: string
+            description: The JSON Pointer Path you want to add or replace
+            example: /address/street
+          value:
+            $ref: '#/components/schemas/JsonNode'
+          op:
+            type: string
+            enum:
+            - replace
     UpdateInstanceRequest:
       required:
       - properties
@@ -2206,6 +2391,16 @@ components:
           description: The intended use of the token
         metadata:
           $ref: '#/components/schemas/Metadata'
+    CreateDeveloperOwnedUserRequest:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        metadata:
+          $ref: '#/components/schemas/Metadata'
     UpdateUserRequest:
       required:
       - email
@@ -2215,11 +2410,11 @@ components:
         email:
           type: string
           format: email
+        metadata:
+          $ref: '#/components/schemas/Metadata'
         password:
           minLength: 1
           type: string
-        metadata:
-          $ref: '#/components/schemas/Metadata'
     Workspace:
       required:
       - id
