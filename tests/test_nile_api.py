@@ -96,7 +96,7 @@ def test_packages():
                 "token",
                 "update_user",
                 "validate_user",
-                "create_developer_owned_user"
+                "create_developer_owned_user",
             }
         elif subpkg == "access":
             assert set(pub_funs) == {

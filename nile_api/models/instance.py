@@ -18,6 +18,7 @@ class Instance:
         type (str): The entity type of this instance Example: clusters.
         properties (JsonSchemaInstance): An *instance* of a JSON Schema Example: {'id': 'lkc-123', 'memory': 4096,
             'cpus': 4}.
+        org (str): The id of the organization that this instance belongs to
         created (Union[Unset, datetime.datetime]):
         updated (Union[Unset, datetime.datetime]):
         seq (Union[Unset, int]):
@@ -27,6 +28,7 @@ class Instance:
     id: str
     type: str
     properties: JsonSchemaInstance
+    org: str
     created: Union[Unset, datetime.datetime] = UNSET
     updated: Union[Unset, datetime.datetime] = UNSET
     seq: Union[Unset, int] = UNSET
@@ -38,6 +40,7 @@ class Instance:
         type = self.type
         properties = self.properties.to_dict()
 
+        org = self.org
         created: Union[Unset, str] = UNSET
         if not isinstance(self.created, Unset):
             created = self.created.isoformat()
@@ -58,6 +61,7 @@ class Instance:
                 "id": id,
                 "type": type,
                 "properties": properties,
+                "org": org,
             }
         )
         if created is not UNSET:
@@ -79,6 +83,8 @@ class Instance:
         type = d.pop("type")
 
         properties = JsonSchemaInstance.from_dict(d.pop("properties"))
+
+        org = d.pop("org")
 
         _created = d.pop("created", UNSET)
         created: Union[Unset, datetime.datetime]
@@ -107,6 +113,7 @@ class Instance:
             id=id,
             type=type,
             properties=properties,
+            org=org,
             created=created,
             updated=updated,
             seq=seq,
