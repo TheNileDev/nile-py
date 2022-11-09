@@ -6,6 +6,8 @@ OPENAPI_URL = "https://prod.thenile.dev/openapi.yaml"
 
 
 ROOT = Path(__file__).parent
+API_ADDONS = ROOT / "api_addons"
+API_DIR = ROOT / "nile_api"
 OPENAPI_PATH = ROOT / "spec/api.yaml"
 GENERATE_REQUIREMENTS = ROOT / "openapi-generator-requirements"
 GENERATE_CONFIG = ROOT / "openapi-generator-config.yml"
@@ -72,3 +74,4 @@ def regenerate(session):
             "--config",
             str(GENERATE_CONFIG),  # str() until wntrblm/nox#649 is released
         )
+        session.run("cp", "-a", str(API_ADDONS) + "/.", str(API_DIR) + "/")
