@@ -20,6 +20,7 @@ class InstanceEvent:
         event_type (Union[Unset, InstanceEventEventType]):
         before (Union[Unset, Instance]):
         after (Union[Unset, Instance]):
+        org (Union[Unset, str]):
     """
 
     timestamp: datetime.datetime
@@ -27,6 +28,7 @@ class InstanceEvent:
     event_type: Union[Unset, InstanceEventEventType] = UNSET
     before: Union[Unset, Instance] = UNSET
     after: Union[Unset, Instance] = UNSET
+    org: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -45,6 +47,8 @@ class InstanceEvent:
         if not isinstance(self.after, Unset):
             after = self.after.to_dict()
 
+        org = self.org
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -60,6 +64,8 @@ class InstanceEvent:
             field_dict["before"] = before
         if after is not UNSET:
             field_dict["after"] = after
+        if org is not UNSET:
+            field_dict["org"] = org
 
         return field_dict
 
@@ -91,12 +97,15 @@ class InstanceEvent:
         else:
             after = Instance.from_dict(_after)
 
+        org = d.pop("org", UNSET)
+
         instance_event = cls(
             timestamp=timestamp,
             id=id,
             event_type=event_type,
             before=before,
             after=after,
+            org=org,
         )
 
         instance_event.additional_properties = d
