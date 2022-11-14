@@ -13,33 +13,35 @@ class UpdateUserRequest:
     """
     Attributes:
         email (str):
-        password (str):
         metadata (Union[Unset, Metadata]): Arbitrary metadata. Example: {'location': 'US', 'age': 21, 'active': True,
             'name': {'first': 'John', 'last': 'Doe'}}.
+        password (Union[Unset, str]):
     """
 
     email: str
-    password: str
     metadata: Union[Unset, Metadata] = UNSET
+    password: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         email = self.email
-        password = self.password
         metadata: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.metadata, Unset):
             metadata = self.metadata.to_dict()
+
+        password = self.password
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "email": email,
-                "password": password,
             }
         )
         if metadata is not UNSET:
             field_dict["metadata"] = metadata
+        if password is not UNSET:
+            field_dict["password"] = password
 
         return field_dict
 
@@ -48,8 +50,6 @@ class UpdateUserRequest:
         d = src_dict.copy()
         email = d.pop("email")
 
-        password = d.pop("password")
-
         _metadata = d.pop("metadata", UNSET)
         metadata: Union[Unset, Metadata]
         if isinstance(_metadata, Unset):
@@ -57,10 +57,12 @@ class UpdateUserRequest:
         else:
             metadata = Metadata.from_dict(_metadata)
 
+        password = d.pop("password", UNSET)
+
         update_user_request = cls(
             email=email,
-            password=password,
             metadata=metadata,
+            password=password,
         )
 
         update_user_request.additional_properties = d
