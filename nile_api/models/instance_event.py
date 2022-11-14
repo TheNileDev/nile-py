@@ -20,7 +20,7 @@ class InstanceEvent:
         event_type (Union[Unset, InstanceEventEventType]):
         before (Union[Unset, Instance]):
         after (Union[Unset, Instance]):
-        org (Union[Unset, str]):
+        org (Union[Unset, str]): The id of the organization that the instance of this event belongs to
     """
 
     timestamp: datetime.datetime

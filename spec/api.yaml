@@ -4,7 +4,7 @@ info:
   description: Making SaaS chill.
   contact:
     email: support@thenile.dev
-  version: 0.1.0-05d95f9
+  version: 0.1.0-fdd7cd5
 servers:
 - url: net-lb-prod-6faf2ab-850391211.us-west-2.elb.amazonaws.com
 tags:
@@ -484,6 +484,10 @@ paths:
       tags:
       - entities
       summary: Get instance events
+      description: |
+        Gets all events for the given entity type.
+        As access policies are enforced on events,
+        if the `before` instance fails access control, it will be omitted.
       operationId: instance.events
       parameters:
       - $ref: '#/components/parameters/workspace'
@@ -1925,6 +1929,8 @@ components:
           $ref: '#/components/schemas/Instance'
         org:
           type: string
+          description: The id of the organization that the instance of this event
+            belongs to
         timestamp:
           type: string
           format: date-time
@@ -2410,7 +2416,6 @@ components:
     UpdateUserRequest:
       required:
       - email
-      - password
       type: object
       properties:
         email:

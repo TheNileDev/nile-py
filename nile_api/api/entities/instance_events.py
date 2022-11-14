@@ -87,6 +87,10 @@ def sync_detailed(
 ) -> Response[List[InstanceEvent]]:
     """Get instance events
 
+     Gets all events for the given entity type.
+    As access policies are enforced on events,
+    if the `before` instance fails access control, it will be omitted.
+
     Args:
         workspace (str):
         type (str):
@@ -123,6 +127,10 @@ def sync(
 ) -> Optional[List[InstanceEvent]]:
     """Get instance events
 
+     Gets all events for the given entity type.
+    As access policies are enforced on events,
+    if the `before` instance fails access control, it will be omitted.
+
     Args:
         workspace (str):
         type (str):
@@ -151,6 +159,10 @@ async def asyncio_detailed(
     limit: Union[Unset, None, int] = 20,
 ) -> Response[List[InstanceEvent]]:
     """Get instance events
+
+     Gets all events for the given entity type.
+    As access policies are enforced on events,
+    if the `before` instance fails access control, it will be omitted.
 
     Args:
         workspace (str):
@@ -185,6 +197,10 @@ async def asyncio(
     limit: Union[Unset, None, int] = 20,
 ) -> Optional[List[InstanceEvent]]:
     """Get instance events
+
+     Gets all events for the given entity type.
+    As access policies are enforced on events,
+    if the `before` instance fails access control, it will be omitted.
 
     Args:
         workspace (str):
