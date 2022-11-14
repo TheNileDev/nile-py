@@ -6,6 +6,7 @@ import httpx
 from ...client import Client
 from ...models.create_entity_request import CreateEntityRequest
 from ...models.entity import Entity
+from ...models.error import Error
 from ...types import Response
 
 
@@ -47,7 +48,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Entity]:
 
     # If it isn't 20X and isn't 40X, we don't know what to do.
     # This is a hard-coded version of https://github.com/openapi-generators/openapi-python-client/pull/593
-    raise Exception(f"Unexpected status code: {response.status_code}")
+    raise RuntimeError(f"Unexpected status code: {response.status_code}")
 
 
 def _build_response(*, response: httpx.Response) -> Response[Entity]:

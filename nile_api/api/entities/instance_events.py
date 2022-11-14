@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 import httpx
 
 from ...client import Client
+from ...models.error import Error
 from ...models.instance_event import InstanceEvent
 from ...types import UNSET, Response, Unset
 
@@ -62,7 +63,7 @@ def _parse_response(
 
     # If it isn't 20X and isn't 40X, we don't know what to do.
     # This is a hard-coded version of https://github.com/openapi-generators/openapi-python-client/pull/593
-    raise Exception(f"Unexpected status code: {response.status_code}")
+    raise RuntimeError(f"Unexpected status code: {response.status_code}")
 
 
 def _build_response(

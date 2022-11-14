@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional
 import httpx
 
 from ...client import Client
+from ...models.error import Error
 from ...models.filter_ import Filter
 from ...models.metric import Metric
 from ...types import Response
@@ -52,7 +53,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[List[Metric]]:
 
     # If it isn't 20X and isn't 40X, we don't know what to do.
     # This is a hard-coded version of https://github.com/openapi-generators/openapi-python-client/pull/593
-    raise Exception(f"Unexpected status code: {response.status_code}")
+    raise RuntimeError(f"Unexpected status code: {response.status_code}")
 
 
 def _build_response(*, response: httpx.Response) -> Response[List[Metric]]:
