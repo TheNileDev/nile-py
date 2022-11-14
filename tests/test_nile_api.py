@@ -10,6 +10,10 @@ def test_toplevel_contents():
     keys = [key for key in dir(nile_api) if not key.startswith("_")]
     assert set(keys) == set(["AuthenticatedClient", "Client", "client"])
 
+    import nile_api.events
+
+    assert "on" in dir(nile_api.events)
+
 
 def test_packages():
     import importlib

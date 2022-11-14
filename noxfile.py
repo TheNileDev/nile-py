@@ -14,6 +14,7 @@ OPENAPI_PATH = ROOT / "spec/api.yaml"
 GENERATE_REQUIREMENTS = ROOT / "openapi-generator-requirements"
 GENERATE_CONFIG = ROOT / "openapi-generator-config.yml"
 TESTS = ROOT / "tests/"
+TEMPLATES = ROOT / "templates"
 
 nox.options.sessions = []
 
@@ -30,6 +31,9 @@ def session(default=True, **kwargs):
 @session(python=["3.7", "3.8", "3.9", "3.10", "pypy3"])
 def tests(session):
     session.install("pytest")
+    # needed for importing events module
+    session.install("httpx")
+    session.install("python-dateutil")
     session.run("pytest", "-s", str(TESTS))
 
 
@@ -75,6 +79,8 @@ def regenerate(session):
             str(OPENAPI_PATH),
             "--config",
             str(GENERATE_CONFIG),  # str() until wntrblm/nox#649 is released
+            "--custom-template-path",
+            str(TEMPLATES),
         )
         # We need to run cp because openapi-python-client doesn't support
         # ignoring files and just deletes everything in API_DIR when generating.
