@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from typing import Any, Dict, Optional, Union, cast
 
 import httpx
@@ -49,14 +50,22 @@ def _parse_response(
     if response.status_code == 302:
         response_302 = cast(Any, None)
         return response_302
-    return None
+
+    # Nile has a known format for 40X errors, so regardless of the spec, lets return a Nile error
+    # Note that the type hint may or may not include Error type
+    if response.status_code >= 400 and response.status_code < 500:
+        return Error.from_dict(response.json())
+
+    # If it isn't 20X and isn't 40X, we don't know what to do.
+    # This is a hard-coded version of https://github.com/openapi-generators/openapi-python-client/pull/593
+    raise Exception(f"Unexpected status code: {response.status_code}")
 
 
 def _build_response(
     *, response: httpx.Response
 ) -> Response[Union[Any, DeveloperGoogleOAuthResponse]]:
     return Response(
-        status_code=response.status_code,
+        status_code=HTTPStatus(response.status_code),
         content=response.content,
         headers=response.headers,
         parsed=_parse_response(response=response),
